@@ -7,11 +7,11 @@ require "rails_admin_live_edit/version"
 Gem::Specification.new do |s|
   s.name        = "rails_admin_live_edit"
   s.version     = RailsAdminLiveEdit::VERSION
-  s.authors     = [""]
-  s.email       = [""]
+  s.authors     = ["Mattia Roccoberton"]
+  s.email       = ["mat@blocknot.es"]
   s.homepage    = "http://blocknot.es"
-  s.summary     = "RailsAdminLiveEdit"
-  s.description = "RailsAdminLiveEdit"
+  s.summary     = "Rails Admin Live Edit"
+  s.description = "A rails_admin plugin to edit site contents from the frontend"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib,vendor}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
