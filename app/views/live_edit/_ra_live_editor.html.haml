@@ -1,0 +1,136 @@
+:ruby
+  ra_le_model = false
+  if defined?( current_user ) && current_user && action_name == 'show' && params[:id]
+    ra_le_model = controller_name.singularize
+    ra_le_id = params[:id]
+  end
+
+- if ra_le_model && ra_le_id
+  :css
+    .ra-le-button {
+      background: #ddd;
+      color: #004;
+      display: inline-block;
+      padding: 5px 10px;
+      text-decoration: none;
+    }
+    .ra-le-button.btn1 {
+      border-left: 1px solid #aaa;
+      border-bottom: 1px solid #aaa;
+      border-radius: 0 0 0 5px;
+    }
+    .ra-le-button.btn2 {
+      border-left: 1px solid #aaa;
+      border-right: 1px solid #aaa;
+      border-bottom: 1px solid #aaa;
+      border-radius: 0 0 5px 0;
+    }
+    .ra-le-controls {
+      position: fixed;
+      top: 0;
+      right: 10px;
+    }
+    .ra-le-controls > a:hover {
+      background: #eee;
+      color: #000;
+    }
+    #ra-le-modal {
+      display: none;
+      background: rgba(0, 0, 0, .30);
+      z-index: 999;
+      padding: 30px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    #ra-le-modal > .modal-dialog {
+      position: relative;
+      margin: 30px auto;
+      width: 940px;
+      -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+      box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+      background: #fff;
+      margin: 0 auto;
+    }
+    #ra-le-modal .dlg-buttons {
+      background: #ccc;
+      text-align: right;
+      padding: 0 4px;
+    }
+    #ra-le-modal .dlg-buttons > a {
+      border: 1px solid #888;
+      color: #888;
+      text-decoration: none;
+    }
+    #ra-le-modal .dlg-buttons > a:hover {
+      background: #eee;
+      color: #004;
+    }
+    #ra-le-modal .modal-footer > .dlg-buttons {
+      text-align: center;
+    }
+    #ra-le-content {
+      background: #ccc;
+      color: #222;
+      font-style: italic;
+      padding-top: 4px;
+      text-align: center;
+    }
+    #ra-le-content > iframe {
+      border: 1px solid #888;
+    }
+
+  #ra-le-modal
+    .modal-dialog
+      .dlg-buttons
+        %a.btn-close.ra-le-button{ href: '#', onclick: 'event.preventDefault();modal.close();' }== &times;
+      #ra-le-content = t 'live_edit.loading'
+      .modal-footer
+        .dlg-buttons
+          %a.btn-close.ra-le-button{ href: '#', onclick: 'event.preventDefault();modal.close();' }= t 'live_edit.button.close'
+  .ra-le-controls
+    %a.btn1.ra-le-button#ra-le-open-modal{ href: '#' }>= t 'live_edit.button.edit_page'
+    = link_to t('live_edit.button.admin'), rails_admin_path, class: 'btn2 ra-le-button'
+
+  :javascript
+    window.onload = function() {
+      var modal = new RModal(document.getElementById('ra-le-modal'), {
+        beforeOpen: function(next) {
+          console.log('beforeOpen');
+          document.getElementById('ra-le-content').innerHTML = '<iframe src="#{rails_admin.edit_path( ra_le_model, ra_le_id )}" width="930px" height="470px"></iframe>';
+          next();
+        },
+        afterOpen: function() {
+          console.log('opened');
+        },
+        beforeClose: function(next) {
+          console.log('beforeClose');
+          next();
+        },
+        afterClose: function() {
+          console.log('closed');
+          window.location.reload( true );
+        }
+        // , bodyClass: 'modal-open'
+        // , dialogClass: 'modal-dialog modal-dialog-lg'
+        // , dialogOpenClass: 'animated fadeIn'
+        // , dialogCloseClass: 'animated fadeOut'
+
+        // , focus: true
+        // , focusElements: ['input.form-control', 'textarea', 'button.btn-primary']
+
+        // , escapeClose: true
+      });
+      document.addEventListener('keydown', function(ev) {
+        modal.keydown(ev);
+      }, false);
+      document.getElementById('ra-le-open-modal').addEventListener("click", function(ev) {
+        ev.preventDefault();
+        modal.open();
+      }, false);
+      window.modal = modal;
+    }
