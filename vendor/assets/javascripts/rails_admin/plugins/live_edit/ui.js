@@ -7,7 +7,7 @@ function inIframe() {
 }
 
 if( inIframe() ) {
-  $(document).ready( function() {
+  $(document).on('rails_admin.dom_ready', function(){
     $('body').css('padding-top', '0');
     $('nav.navbar').hide();
     $('.breadcrumb').hide();

@@ -15,20 +15,27 @@
       text-decoration: none;
     }
     .ra-le-button.btn1 {
+      border-top: 1px solid #aaa;
       border-left: 1px solid #aaa;
-      border-bottom: 1px solid #aaa;
-      border-radius: 0 0 0 5px;
+      border-radius: 5px 0 0 0;
     }
     .ra-le-button.btn2 {
+      border-top: 1px solid #aaa;
       border-left: 1px solid #aaa;
       border-right: 1px solid #aaa;
-      border-bottom: 1px solid #aaa;
-      border-radius: 0 0 5px 0;
+      border-radius: 0 5px 0 0;
     }
     .ra-le-controls {
+      background: rgba(0, 0, 0, .2);
+      bottom: 0;
+      left: 0;
+      padding-top: 5px;
       position: fixed;
-      top: 0;
-      right: 10px;
+      text-align: right;
+      width: 100%;
+    }
+    .ra-le-controls > a:last-child {
+      margin-right: 5px;
     }
     .ra-le-controls > a:hover {
       background: #eee;
@@ -92,6 +99,7 @@
       .modal-footer
         .dlg-buttons
           %a.btn-close.ra-le-button{ href: '#', onclick: 'event.preventDefault();modal.close();' }= t 'live_edit.button.close'
+
   .ra-le-controls
     %a.btn1.ra-le-button#ra-le-open-modal{ href: '#' }>= t 'live_edit.button.edit_page'
     = link_to t('live_edit.button.admin'), rails_admin_path, class: 'btn2 ra-le-button'
@@ -260,19 +268,15 @@
     window.onload = function() {
       var modal = new RModal(document.getElementById('ra-le-modal'), {
         beforeOpen: function(next) {
-          console.log('beforeOpen');
           document.getElementById('ra-le-content').innerHTML = '<iframe src="#{rails_admin.edit_path( ra_le_model, ra_le_id )}" width="930px" height="470px"></iframe>';
           next();
         },
         afterOpen: function() {
-          console.log('opened');
         },
         beforeClose: function(next) {
-          console.log('beforeClose');
           next();
         },
         afterClose: function() {
-          console.log('closed');
           window.location.reload( true );
         }
         // , bodyClass: 'modal-open'
