@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = RailsAdminLiveEdit::VERSION
   s.authors     = ["Mattia Roccoberton"]
   s.email       = ["mat@blocknot.es"]
-  s.homepage    = "http://blocknot.es"
+  s.homepage    = "https://github.com/blocknotes/rails_admin_live_edit"
   s.summary     = "Rails Admin Live Edit"
   s.description = "A rails_admin plugin to edit site contents from the frontend"
   s.license     = "MIT"
