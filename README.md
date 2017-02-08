@@ -2,7 +2,9 @@
 
 A [rails_admin](https://github.com/sferik/rails_admin) plugin to edit site contents from the frontend.
 
-If the user is logged in in rails_admin and is viewing an editable page an edit button is shown on the top right which allow to open a modal window to edit the page content.
+If the user is logged in rails_admin a fixed bar on bottom is shown. It allows to edit the current record (if in a *show* page) or to create a new one (if in an *index* page).
+
+Demo: [heroku app](http://rails-admin-material.herokuapp.com/posts/)
 
 ## Installation
 
@@ -10,9 +12,11 @@ If the user is logged in in rails_admin and is viewing an editable page an edit 
 
 - Add to application layout (in body) (erb example): `<%= render 'live_edit/ra_live_editor' %>`
 
-- Add to *app/assets/javascripts/application.js*: `//= require rmodal.js/dist/rmodal`
-
 - Edit or create *app/assets/javascripts/rails_admin/custom/ui.js* and add: `//= require rails_admin/plugins/live_edit/ui.js`
+
+## Notes
+
+- This plugin use `current_user` method to check if the user is logged in; to bypass this check it is possible to define a `current_user` helper method.
 
 ## Preview
 
