@@ -1,14 +1,10 @@
 :ruby
   ra_logged = false
   ra_le_model = false
-  p '1'
-  p current_user
   if defined?( current_user ) && current_user
-    p '2'
     ra_logged = true
     model = controller_name.singularize
     if RailsAdmin.config && RailsAdmin.config.models.map{ |mod| mod.abstract_model.model_name.underscore }.include?( model )
-      p '3'
       ra_le_model = model
       ra_le_id = params[:id]
     end
@@ -28,23 +24,12 @@
       background: #ddd;
       color: #004;
       display: inline-block;
-      padding: 5px 10px;
+      padding: 6px 10px 4px 10px;
       text-decoration: none;
     }
-    .ra-le-button.btn1 {
-      border-top: 1px solid #aaa;
-      border-left: 1px solid #aaa;
-      border-radius: 5px 0 0 0;
-    }
-    .ra-le-button.btn2 {
-      border-top: 1px solid #aaa;
-      border-left: 1px solid #aaa;
-    }
-    .ra-le-button.btn3 {
-      border-top: 1px solid #aaa;
-      border-left: 1px solid #aaa;
-      border-right: 1px solid #aaa;
-      border-radius: 0 5px 0 0;
+    .ra-le-controls > .ra-le-button {
+      border-top: 1px solid #888;
+      border-left: 1px solid #888;
     }
     .ra-le-controls {
       background: rgba(0, 0, 0, .3);
@@ -60,11 +45,8 @@
       float: left;
       padding: 4px 0 0 8px;
     }
-    .ra-le-controls > .close {
-      border-left: 1px solid #aaa;
-      padding: 5px 0;
-    }
     .ra-le-controls > a:last-child {
+      border-right: 1px solid #888;
       margin-right: 5px;
     }
     .ra-le-controls > a:hover {
@@ -133,24 +115,28 @@
   #ra-le-modal
     .modal-dialog
       .dlg-buttons
-        %a.btn-close.ra-le-button{ href: '#', onclick: 'event.preventDefault();modal.close();' }== &times;
+        %a.btn-close.ra-le-button{ href: '#', onclick: 'closeModal(event);' }== &times;
       #ra-le-content = t 'live_edit.loading'
       .modal-footer
         .dlg-buttons
-          %a.btn-close.ra-le-button{ href: '#', onclick: 'event.preventDefault();modal.close();' }= t 'live_edit.button.close'
+          %a.btn-close.ra-le-button{ href: '#', onclick: 'closeModal(event);' }= t 'live_edit.button.close'
 
   .ra-le-controls
     .admin-title= admin_title
-    = link_to rails_admin_path, class: 'btn1 ra-le-button' do
+    = link_to rails_admin_path, class: 'ra-le-button' do
       = t('live_edit.button.admin')
     - if ra_le_model
+      %a.ra-le-button#ra-le-open-modal2{ href: '#', 'data-op': 'new' }>= t 'live_edit.button.new'
       - if ra_le_id
-        %a.btn2.ra-le-button#ra-le-open-modal1{ href: '#', 'data-op': 'edit' }>= t 'live_edit.button.edit_page'
-      %a.btn3.ra-le-button#ra-le-open-modal2{ href: '#', 'data-op': 'new' }>= t 'live_edit.button.new_page'
-    - else
-      %span.close== &nbsp;
+        %a.ra-le-button#ra-le-open-modal1{ href: '#', 'data-op': 'edit' }>= t 'live_edit.button.edit'
+        %a.ra-le-button#ra-le-open-modal3{ href: '#', 'data-op': 'delete' }>= t 'live_edit.button.delete'
 
   :javascript
+    var reload = false;
+    function closeModal( event ) {
+      event.preventDefault();
+      modal.close();
+    }
     // >>> rmodal.js >>>
     (function (global, factory) {
         typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -325,7 +311,7 @@
           next();
         },
         afterClose: function() {
-          window.location.reload( true );
+          if( reload ) window.location.reload( true );
         }
         // , bodyClass: 'modal-open'
         // , dialogClass: 'modal-dialog modal-dialog-lg'
@@ -350,6 +336,7 @@
       if( document.getElementById('ra-le-open-modal1') ) {
         document.getElementById('ra-le-open-modal1').addEventListener("click", function(ev) {
           ev.preventDefault();
+          reload = true;
           iframe = '<iframe src="#{rails_admin.edit_path( ra_le_model, ra_le_id ? ra_le_id : 0 )}" width="930px" height="470px"></iframe>';
           modal.open();
         }, false);
@@ -357,7 +344,16 @@
       if( document.getElementById('ra-le-open-modal2') ) {
         document.getElementById('ra-le-open-modal2').addEventListener("click", function(ev) {
           ev.preventDefault();
+          reload = true;
           iframe = '<iframe src="#{rails_admin.new_path( ra_le_model )}" width="930px" height="470px"></iframe>';
+          modal.open();
+        }, false);
+      }
+      if( document.getElementById('ra-le-open-modal3') ) {
+        document.getElementById('ra-le-open-modal3').addEventListener("click", function(ev) {
+          ev.preventDefault();
+          reload = false;
+          iframe = '<iframe src="#{rails_admin.delete_path( ra_le_model, ra_le_id ? ra_le_id : 0 )}" width="930px" height="470px"></iframe>';
           modal.open();
         }, false);
       }

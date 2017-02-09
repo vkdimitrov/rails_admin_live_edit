@@ -17,7 +17,7 @@ if( inIframe() ) {
     $('button[name="_save"]').hide();
     $('button[name="_add_another"]').hide();
     $('button[name="_continue"]').hide();
-    $('.content > .page-header > h1').css( 'text-align', 'center' );
-    $('.content > .page-header > h1').css( 'font-size', '125%' );
+    $('.content > .page-header').hide();
+    $('#list').hide();
   });
 }
