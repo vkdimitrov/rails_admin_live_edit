@@ -2,7 +2,7 @@
 
 A [rails_admin](https://github.com/sferik/rails_admin) plugin to edit site contents from the frontend.
 
-If the user is logged in rails_admin a fixed bar on bottom is shown. It allows to edit the current record (if in a *show* page) or to create a new one (if in an *index* page).
+If the user is logged in rails_admin a fixed bar on bottom is shown. It allows to edit (or delete) the current record (if in a *show* page) or to create a new one.
 
 Demo: [heroku app](http://rails-admin-material.herokuapp.com/posts/)
 
