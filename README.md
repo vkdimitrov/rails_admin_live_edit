@@ -12,9 +12,7 @@ Demo: [heroku app](http://rails-admin-material.herokuapp.com/posts/)
 
 - Add to application layout (in body) (erb example): `<%= render 'live_edit/ra_live_editor' %>`
 
-
-- *[Optional]* Instead of letting the model name being guest from the controller name that rendered the view you can render the live_editor partial passing the **target_model** and/or the **target_model_id** like this: `<%= render partial: 'live_edit/ra_live_editor', locals: { target_model: 'Post', target_model_id: 42 } %>` 
-
+- *[Optional]* Instead of letting the model name being guest from the controller name that rendered the view you can render the live_editor partial passing the **target_model** and/or the **target_model_id** like this: `<%= render partial: 'live_edit/ra_live_editor', locals: { target_model: 'post', target_model_id: 42 } %>` 
 
 - Edit or create *app/assets/javascripts/rails_admin/custom/ui.js* and add: `//= require rails_admin/plugins/live_edit/ui.js`
 
