@@ -1,3 +1,12 @@
+# PROJECT UNMAINTAINED
+
+> *This project is not maintained anymore*
+>
+> *If you like it or continue to use it fork it please.*
+
+---
+---
+
 # RailsAdminLiveEdit [![Gem Version](https://badge.fury.io/rb/rails_admin_live_edit.svg)](https://badge.fury.io/rb/rails_admin_live_edit)
 
 A [rails_admin](https://github.com/sferik/rails_admin) plugin to edit site contents from the frontend.
@@ -11,6 +20,8 @@ Demo: [heroku app](http://rails-admin-material.herokuapp.com/posts/)
 - Add to Gemfile: `gem 'rails_admin_live_edit'`
 
 - Add to application layout (in body) (erb example): `<%= render 'live_edit/ra_live_editor' %>`
+
+- *[Optional]* Instead of letting the model name being guest from the controller name that rendered the view you can render the live_editor partial passing the **target_model** and/or the **target_model_id** like this: `<%= render partial: 'live_edit/ra_live_editor', locals: { target_model: 'post', target_model_id: 42 } %>` 
 
 - Edit or create *app/assets/javascripts/rails_admin/custom/ui.js* and add: `//= require rails_admin/plugins/live_edit/ui.js`
 
