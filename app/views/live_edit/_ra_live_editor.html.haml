@@ -6,7 +6,7 @@
     model = local_assigns[:target_model] || controller_name.singularize
     if RailsAdmin.config && RailsAdmin.config.models.map{ |mod| mod.abstract_model.model_name.underscore }.include?( model )
       ra_le_model = model
-      ra_le_id = local_assigns[:target_model_id] || params[:id]
+      ra_le_id = local_assigns[:target_model_id]
     end
     if RailsAdmin.config.main_app_name
       if RailsAdmin.config.main_app_name.is_a? Proc
