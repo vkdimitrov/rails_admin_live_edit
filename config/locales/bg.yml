@@ -1,5 +1,6 @@
 bg:
   live_edit:
     button:
-      admin: Промени в админ-а
+      admin: Администрация
+      edit_in_admin: Промени в админ-а
       edit: Промени на място

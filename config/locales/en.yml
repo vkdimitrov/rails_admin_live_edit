@@ -1,5 +1,6 @@
 en:
   live_edit:
     button:
-      admin: Edit in Admin
+      admin: Admin
+      edit_in_admin: Edit in Admin
       edit: Edit here
