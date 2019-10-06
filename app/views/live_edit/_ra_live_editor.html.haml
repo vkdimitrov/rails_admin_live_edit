@@ -123,7 +123,6 @@
 
   .ra-le-controls
     .admin-title= admin_title
-    = link_to t('live_edit.button.admin'), rails_admin.edit_path(ra_le_model, ra_le_id), class: 'ra-le-button'
     - if ra_le_model && ra_le_id
       = link_to rails_admin.edit_path(ra_le_model, ra_le_id), class: 'ra-le-button' do
         = t('live_edit.button.edit_in_admin')
