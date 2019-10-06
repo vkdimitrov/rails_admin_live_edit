@@ -123,13 +123,10 @@
 
   .ra-le-controls
     .admin-title= admin_title
-    = link_to rails_admin_path, class: 'ra-le-button' do
-      = t('live_edit.button.admin')
-    - if ra_le_model
-      %a.ra-le-button#ra-le-open-modal2{ href: '#', 'data-op': 'new' }>= t 'live_edit.button.new'
-      - if ra_le_id
-        %a.ra-le-button#ra-le-open-modal1{ href: '#', 'data-op': 'edit' }>= t 'live_edit.button.edit'
-        %a.ra-le-button#ra-le-open-modal3{ href: '#', 'data-op': 'delete' }>= t 'live_edit.button.delete'
+    - if ra_le_model && ra_le_id
+      = link_to rails_admin.edit_path(ra_le_model, ra_le_id), class: 'ra-le-button' do
+        = t('live_edit.button.admin')
+      %a.ra-le-button#ra-le-open-modal1{ href: '#', 'data-op': 'edit' }>= t 'live_edit.button.edit'
 
   :javascript
     var reload = false;
